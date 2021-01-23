@@ -464,6 +464,7 @@ void GetInformationFromDumpFile()
         
    
 
+    // TO DO: Convert into better data structures
     wprintf(_T("The dump type is %s\n"), GetDebuggeeTypeName(dbgeClass, dbgeQualifier));
     printf("ProcessID is 0x:%x\n", procID);
     wprintf(_T("Process Name is: %s\n"), exeName);
