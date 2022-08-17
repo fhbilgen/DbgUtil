@@ -10,11 +10,11 @@ namespace DbgHelpers.StackEngine
 
     public static class StackHelper
     {
-        public const byte FunctionNameStart = 40;
-        public const byte FrameStop = 2;
-        public const string NewStackTag = "Id: ";
-        public const byte ThreadIDStart = 11;
-        public const char ThreadSeparator = '.';
+        public static byte FunctionNameStart = 40;
+        public static byte FrameStop = 2;
+        public static string NewStackTag = "Id: ";
+        public static byte ThreadIDStart = 11;
+        public static char ThreadSeparator = '.';
     }
 
 
