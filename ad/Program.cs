@@ -28,7 +28,7 @@ namespace ad
             }
 
 
-            //Analyse analyse = new Analyse(@"F:\TempData\AKBANK\BIZTALK_PTO\normal\YeniOdeme08112020\BTSNTSvc64.exe_201108_010030.dmp");
+            //Analyse analyse = new Analyse(@"F:\TempData\someprocess.exe_201108_010030.dmp");
             Analyse analyse = new Analyse(inputFileName);
             analyse.Initialize();
 

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Diagnostics.Runtime;
 using DbgHelpers.DumpAnalysis;
 
+
 namespace DbgHelpers.Output
 {
     public enum OutputDirection
@@ -42,8 +43,11 @@ namespace DbgHelpers.Output
             stringBuilder.Append($"{"CLR Version",-15}{"CLR File",-100}{"CLR Symbol File",-100}{"DAC Version", -15}{"DAC Arch", -10}{"DAC File", -100}{System.Environment.NewLine}");
             foreach (ClrInfo info in clrversions)
             {
-                DacInfo dacInfo = info.DacInfo;                
-                stringBuilder.Append($"{info.Version.ToString(),-15}{info.ModuleInfo?.FileName,-100}{info.ModuleInfo?.Pdb?.ToString(),-100}{dacInfo.Version.ToString(),-15}{dacInfo.TargetArchitecture.ToString(),-10}{dacInfo?.PlatformAgnosticFileName?.ToString(), -100}{System.Environment.NewLine}");
+
+                //DacInfo dacInfo = info.DacInfo;                
+                
+                
+                //stringBuilder.Append($"{info.Version.ToString(),-15}{info.ModuleInfo?.FileName,-100}{info.ModuleInfo?.Pdb?.ToString(),-100}{info.Version.ToString(),-15}{info.TargetArchitecture.ToString(),-10}{info?.PlatformAgnosticFileName?.ToString(), -100}{System.Environment.NewLine}");
             }
 
             return stringBuilder.ToString();
