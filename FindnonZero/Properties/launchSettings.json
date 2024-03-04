@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FindnonZero": {
+      "commandName": "Project",
+      "commandLineArgs": "E:\\TempData\\AKBANK\\800000.txt"
+    }
+  }
+}

@@ -116,4 +116,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy *.dll c:\tools\mytools</PostBuildEvent>
+  </PropertyGroup>
 </Project>
