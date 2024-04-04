@@ -2,8 +2,10 @@
 //
 
 #include "common.h"
+#include <DbgHelp.h>
 
-PSTR g_dumpFile;
+//PSTR g_dumpFile;
+wchar_t* g_dumpFile;
 PSTR g_symbolPath;
 
 #define DEBUG_FORMAT_MESSAGE_LENGTH 300
@@ -11,7 +13,8 @@ PSTR g_symbolPath;
 
 IDebugClient7*          g_dbgClient;
 IDebugControl7*         g_dbgControl;
-IDebugSymbols5*         g_dbgSymbols;
+//IDebugSymbols5*         g_dbgSymbols;
+IDebugSymbols3*         g_dbgSymbols;
 IDebugSystemObjects4*   g_dbgSysObjects;
 IDebugAdvanced3*        g_dbgAdvanced;
 IDebugDataSpaces4*      g_dbgDataSpace;
@@ -81,7 +84,8 @@ void Initialize()
 
     if ( 
          (status = g_dbgClient->QueryInterface(__uuidof(IDebugControl7), (void**)&g_dbgControl)) != S_OK ||
-         (status = g_dbgClient->QueryInterface(__uuidof(IDebugSymbols5), (void**)&g_dbgSymbols)) != S_OK  ||
+         //(status = g_dbgClient->QueryInterface(__uuidof(IDebugSymbols5), (void**)&g_dbgSymbols)) != S_OK  ||
+        (status = g_dbgClient->QueryInterface(__uuidof(IDebugSymbols3), (void**)&g_dbgSymbols)) != S_OK ||
          (status = g_dbgClient->QueryInterface(__uuidof(IDebugSystemObjects4), (void**)&g_dbgSysObjects)) != S_OK ||
          (status = g_dbgClient->QueryInterface(__uuidof(IDebugAdvanced3), (void**)&g_dbgAdvanced)) != S_OK ||
          (status = g_dbgClient->QueryInterface(__uuidof(IDebugDataSpaces4), (void**)&g_dbgDataSpace)) != S_OK
@@ -99,12 +103,25 @@ void MakeTheSymbolsWork()
     HRESULT status;
 
     char path[200];
- 
+        
+
+    symOpt = SYMOPT_CASE_INSENSITIVE | SYMOPT_UNDNAME | SYMOPT_DEFERRED_LOADS | SYMOPT_LOAD_LINES | SYMOPT_OMAP_FIND_NEAREST | SYMOPT_FAIL_CRITICAL_ERRORS |
+        SYMOPT_AUTO_PUBLICS | SYMOPT_NO_IMAGE_SEARCH;
+
+    
+    status = g_dbgSymbols->SetSymbolOptions(symOpt);
+    if (status != S_OK)
+	    printf("Error in SetSymbolOption: 0x%x\n", status);
+
+    //status = g_dbgSymbols->SetSymbolPath("srv*e:\\sym\\pri*https://symweb");
+    status = g_dbgSymbols->SetSymbolPath("e:\\sym\\pri");
+    if (status != S_OK)
+        _tprintf(_T("Error happened in SetSymbolPath 0x:%x\n"), status);
 
     status = g_dbgSymbols->GetSymbolOptions(&symOpt);
     if (status != S_OK)
         printf("Error in GetSymbolOption: 0x%x\n", status);
-    
+
     status = g_dbgSymbols->GetSymbolPath(path, 200, &symPathSize);
     if (status != S_OK)
         printf("Error in GetSymbolPath: 0x%x\n", status);
@@ -263,9 +280,9 @@ void GetInformationFromDumpFile()
             printf("The last event code was %#X\n", expCode);
 
             // https://stackoverflow.com/questions/39230167/retrieving-the-stack-trace-from-the-stored-exception-context-in-a-minidump-simi
-            status = g_dbgSymbols->SetScopeFromStoredEvent();
+            /*status = g_dbgSymbols->SetScopeFromStoredEvent();
             DumpStack();
-            status = g_dbgSymbols->SetScope(NULL, NULL, NULL, 0);
+            status = g_dbgSymbols->SetScope(NULL, NULL, NULL, 0);*/
         }
     }
 
@@ -707,7 +724,7 @@ void DumpAllStacks()
 
 
         // Print the call stack.
-        if ((status = g_dbgControl->OutputStackTrace(DEBUG_OUTCTL_ALL_CLIENTS, frames, count, DEBUG_STACK_FUNCTION_INFO | DEBUG_STACK_SOURCE_LINE | DEBUG_STACK_FRAME_ADDRESSES | DEBUG_STACK_COLUMN_NAMES | DEBUG_STACK_FRAME_NUMBERS)) != S_OK)
+        if ((status = g_dbgControl->OutputStackTrace(DEBUG_OUTCTL_ALL_CLIENTS, frames, count, DEBUG_STACK_SOURCE_LINE | DEBUG_STACK_FRAME_ADDRESSES | DEBUG_STACK_COLUMN_NAMES | DEBUG_STACK_FRAME_NUMBERS)) != S_OK)
         {
 
             _tprintf(_T("Error happened 0x:%x\n"), status);
@@ -718,7 +735,7 @@ void DumpAllStacks()
     }
 }
 
-int main(int argc, char* argv[])
+int wmain(int argc, wchar_t* argv[])
 {
     size_t dmpNameLen = 0;
     errno_t err = -1;
@@ -728,42 +745,50 @@ int main(int argc, char* argv[])
 
     if (argc > 1)
     {
-        dmpNameLen = strlen(argv[1]);
+        //dmpNameLen = strlen(argv[1]);
+        dmpNameLen = wcslen(argv[1]);
         if (dmpNameLen != 0)
         {
             dmpNameLen++;
-            g_dumpFile = (PSTR)malloc(sizeof(char) * dmpNameLen);
+            //g_dumpFile = (PSTR)malloc(sizeof(wchar_t) * dmpNameLen);
+            g_dumpFile = (wchar_t*) malloc(sizeof(wchar_t) * (dmpNameLen+1));
             if (g_dumpFile != NULL)
             {
-                err = strcpy_s(g_dumpFile, dmpNameLen, argv[1]);
+                //err = strcpy_s(g_dumpFile, dmpNameLen, argv[1]);
+                err = wcscpy_s(g_dumpFile, dmpNameLen, argv[1]);
             }
         }
     }
 
     if (!err)
     {
-        if ((status = g_dbgClient->SetOutputCallbacks(&g_OutputCb)) != S_OK)
-            _tprintf(_T("Error happened 0x:%x\n"), status);
-
-        if ((status = g_dbgSymbols->SetSymbolPath("srv*f:\\sym\\pri*http://symweb")) != S_OK)
-            _tprintf(_T("Error happened 0x:%x\n"), status);
+        MakeTheSymbolsWork();
+           
 
         //if ((status = g_dbgClient->OpenDumpFileWide(L"F:\\TempData\\AKBANK\\BIZTALK_PTO\\normal\\YeniOdeme08112020\\BTSNTSvc64.exe_201108_010030.dmp", 0)) != S_OK)
-        if ((status = g_dbgClient->OpenDumpFile(g_dumpFile)) != S_OK)
+        if ((status = g_dbgClient->OpenDumpFileWide(g_dumpFile, 0)) != S_OK)
+        //if ((status = g_dbgClient->OpenDumpFile(g_dumpFile)) != S_OK)
             _tprintf(_T("Error happened 0x:%x\n"), status);
 
         if ((status = g_dbgControl->WaitForEvent(DEBUG_WAIT_DEFAULT, INFINITE)) != S_OK)
             _tprintf(_T("Error happened 0x:%x\n"), status);
 
 
-
-        MakeTheSymbolsWork();
+      /*  if ((status = g_dbgSymbols->SetScopeFromStoredEvent()) != S_OK)
+            _tprintf(_T("Error happened 0x:%x\n"), status);*/
+                
+        if ((status = g_dbgClient->SetOutputCallbacks(&g_OutputCb)) != S_OK)
+            _tprintf(_T("Error happened 0x:%x\n"), status);
 
         GetInformationFromDumpFile();
 
+        //status = g_dbgSymbols->SetScopeFromStoredEvent();
+
         // DumpStack();
+        
         DumpAllStacks();
 
+        
     }
 
     return 0;

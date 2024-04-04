@@ -43,9 +43,17 @@ namespace DbgHelpers.StackEngine
             //int threadIDInt;
             int threadIDStart = 0;
 
-            for(int i = StackHelper.ThreadIDStart-1; i!=line.Length; i++)
-                if ( line[i].CompareTo(StackHelper.ThreadSeparator ) == 0  )
+            for (int i = StackHelper.ThreadIDStart - 1; i != line.Length; i++)
+                if (line[i].CompareTo(StackHelper.ThreadSeparator) == 0)
+                {
                     threadIDStart = i;
+                    // 4-April-2024, faikb, added the break statement
+                    // If the threadseperator is found, no need to continue
+                    // else the function might return a further threadseparator value 
+                    // and result in thread numbers like NET for the following thread headers:
+                    //   24  Id: 3288.31a0 Suspend: 0 Teb: 0000006d`17fec000 Unfrozen ".NET Server GC"
+                    break;
+                }
 
             // For some reason the ProcessID.ThreadID pair is not found
             if (threadIDStart == 0)
