@@ -15,6 +15,13 @@ namespace Scratch
             if (args.Length == 0)
             {
                 Console.WriteLine("No stack file is specified");
+                Console.WriteLine("The usage is: gs.exe filename [x86 | 32]");
+                return;
+            }
+
+            if (args.Length == 1 && ( args[0].ToLower().Equals("help") || args[0].ToLower().Equals("-?")) )
+            {
+                Console.WriteLine("The usage is: gs.exe filename [x86 | 32]");
                 return;
             }
 
