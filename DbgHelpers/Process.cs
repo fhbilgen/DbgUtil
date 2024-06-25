@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -144,6 +145,71 @@ namespace DbgHelpers
                 Console.WriteLine();
             }
         }
-        
+
+        public void OutputToFile(string path)
+        {
+            int i = 1;
+            StringBuilder sb = new StringBuilder();
+
+            using (StreamWriter streamWriter = new StreamWriter(path))
+            {
+
+                streamWriter.WriteLine("========================================================");
+                streamWriter.WriteLine($"There are {AllCallStacks.Count} threads in the process.");
+                streamWriter.WriteLine("========================================================");
+                streamWriter.WriteLine();
+
+
+                foreach (var item in SortedUniqueCallStacks)
+                {
+
+                    streamWriter.WriteLine($"Thread group: {i++}");
+                    streamWriter.WriteLine($"Number of threads with same callstack: {item.Value.SameThreads.Count}");
+                    streamWriter.Write($"Threads with same callstacks: ");
+                    foreach (string threadid in item.Value.SameThreads)
+                        sb.Append(" " + threadid + ",");
+
+                    sb.Remove(sb.Length - 1, 1);
+                    streamWriter.Write(sb.ToString());
+                    sb.Clear();
+
+                    streamWriter.WriteLine();
+                    streamWriter.WriteLine($"CallStack");
+                    streamWriter.WriteLine($"------------------");
+                    streamWriter.WriteLine($"FrameNo\tFunction");
+                    foreach (StackFrame frm in item.Value.Frames)
+                    {
+                        streamWriter.WriteLine($"{frm.Sequence}\t{frm.Function}");
+                    }
+
+                    streamWriter.WriteLine();
+                }
+
+
+                streamWriter.Close();
+            }
+        }
+        //public static void OutputToFile(List<HeapCompareStatEntry> result, string path)
+        //{
+        //    string line;
+        //    using (StreamWriter streamWriter = new StreamWriter(path))
+        //    {
+
+        //        streamWriter.WriteLine("ClassName\tCount1\tCount2\tCountDelta\tTotal1\tTotal2\tTotalDelta");
+
+        //        //Console.WriteLine("MT\tClassName\tCount1\tCount2\tCountDelta\tTotal1\tTotal2\tTotalDelta");
+
+        //        foreach (HeapCompareStatEntry hcse in result)
+        //        {
+        //            line = $"{hcse.ClassName}\t{hcse.Count}\t{hcse.Count2}\t{hcse.Count2 - hcse.Count}\t{hcse.Total}\t{hcse.Total2}\t{hcse.Total2 - hcse.Total}";
+        //            //Console.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}", hcse.MT, hcse.ClassName, hcse.Count, hcse.Count2, hcse.Count2 - hcse.Count, hcse.Total, hcse.Total2, hcse.Total2 - hcse.Total);
+        //            streamWriter.WriteLine(line);
+        //            //  Console.WriteLine(line);
+        //        }
+
+        //        streamWriter.Close();
+        //    }
+        //}
+
     }
 }
