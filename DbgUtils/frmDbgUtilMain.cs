@@ -22,5 +22,11 @@ namespace DbgUtils
             frmTimeCalculations timeCalculations = new frmTimeCalculations();
             timeCalculations.ShowDialog();
         }
+
+        private void ticksTTimeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmTickToTime tickToTime = new frmTickToTime();
+            tickToTime.ShowDialog();
+        }
     }
 }
