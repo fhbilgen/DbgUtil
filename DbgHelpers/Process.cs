@@ -24,12 +24,14 @@ namespace DbgHelpers
 
     public class Process
     {
-        public List<CallStack> AllCallStacks { get; set; }        
+        public List<CallStack> AllCallStacks { get; set; }
         private Dictionary<byte[], UniqueCallStack> UniqueCallStacks;
         private Dictionary<byte[], UniqueCallStack> SortedUniqueCallStacks;
         private List<byte[]> UniqueHashCodes = new List<byte[]>();
         private Dictionary<byte[], List<string>> CallStackGroups = new Dictionary<byte[], List<string>>();
-        
+
+
+        public Dictionary<byte[], UniqueCallStack> SortedUniqStacks { get { return SortedUniqueCallStacks; } }
 
         public Process()
         {

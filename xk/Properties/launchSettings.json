@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "xk": {
+      "commandName": "Project",
+      "commandLineArgs": "F:\\mrdata\\BYNR\\20240628\\s2.txt"
+    }
+  }
+}
