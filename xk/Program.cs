@@ -10,6 +10,67 @@ namespace xk
     internal class Program
     {
 
+        static string Int64ToIP4(uint ip)
+        {
+            return new System.Net.IPAddress(ip).ToString();
+        }
+
+        static void ConvertListFromHex2Dec(string fileName, string outputFilename)
+        {
+            string[] lines = System.IO.File.ReadAllLines(fileName);
+            // Insteadof displaying the sb variable to console write it into a text file who name is in the outputfilename argument
+
+            using (StreamWriter writer = new StreamWriter(outputFilename))
+            {
+                foreach (var line in lines)
+                {
+                    string[] hexValuesSplit = line.Split(',');
+                    StringBuilder sb = new StringBuilder();
+                    for(int i = 0; i < hexValuesSplit.Length; i++)                    
+                    {
+                        if (i == 0)
+                            sb.Append(hexValuesSplit[i] + " ");
+                        else
+                            sb.Append(Convert.ToInt32(hexValuesSplit[i], 16) + " ");
+                    }
+                   
+                    writer.WriteLine(sb.ToString());
+                }
+            }
+        }
+
+        static void ConvertComplexListFromHex2Dec(string fileName, string outputFilename)
+        {
+            string[] lines = System.IO.File.ReadAllLines(fileName);
+            // Insteadof displaying the sb variable to console write it into a text file who name is in the outputfilename argument
+
+            for (int i = 0; i!= lines.Count() - 1;i++)
+            {
+                if ( i % 4 == 0 )
+                {
+                    lines[i] = lines[i].Remove(0, 20);
+                }
+            }
+
+            using (StreamWriter writer = new StreamWriter(outputFilename))
+            {
+                foreach (var line in lines)
+                {
+                    string[] hexValuesSplit = line.Split(',');
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < hexValuesSplit.Length; i++)
+                    {
+                        if (i == 0)
+                            sb.Append(hexValuesSplit[i] + " ");
+                        else
+                            sb.Append(Convert.ToInt32(hexValuesSplit[i], 16) + " ");
+                    }
+
+                    writer.WriteLine(sb.ToString());
+                }
+            }
+        }
+
         static void ExecuteQueriesOnStacks(string fileName)
         {
 
@@ -149,9 +210,35 @@ namespace xk
 
         }
 
+        static void MethodNamesAndCounts(string fileName)
+        {
+            string[] lines = System.IO.File.ReadAllLines(fileName);
+
+            
+            var grouped = lines
+            .GroupBy(s => s)
+            .Select(g => new { Value = g.Key, Count = g.Count() })
+            .OrderByDescending(x => x.Count);
+
+            foreach (var item in grouped)
+            {
+                Console.WriteLine($"{item.Value}: {item.Count}");
+            }
+        }
+
+
         static void Main(string[] args)
         {
-            FindFuncInUniqStackGroup(args[0], "System_Data!SNINativeMethodWrapper.SNIReadSyncOverAsync+0x66");
+            //FindFuncInUniqStackGroup(args[0], "System_Data!SNINativeMethodWrapper.SNIReadSyncOverAsync+0x66");
+            //ConvertListFromHex2Dec(args[0], args[1]);
+            //ConvertComplexListFromHex2Dec(args[0], args[1]);
+            //MethodNamesAndCounts(args[0]);
+            //Console.WriteLine("Enter the int value to get the IPv4 address");
+            //var ipStr = Console.ReadLine();
+            //Console.WriteLine(Int64ToIP4(uint.Parse(ipStr)));
+            var scan = new scanMemPageContent(args[0], args[1]);
+            scan.ProcessContentAsync(args).Wait();
+
         }
     }
 }

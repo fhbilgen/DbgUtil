@@ -27,7 +27,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DumpGen", "DumpGen\DumpGen.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindnonZero", "FindnonZero\FindnonZero.csproj", "{D50D4ACA-3B71-4167-8D72-94C0F514F5F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xk", "xk\xk.csproj", "{6F7A13B6-BB74-4F6B-B250-5D201C01B957}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "xk", "xk\xk.csproj", "{6F7A13B6-BB74-4F6B-B250-5D201C01B957}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
