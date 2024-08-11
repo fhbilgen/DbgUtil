@@ -14,12 +14,16 @@ namespace ProcessPTOInput
                 return;
             }
 
-            Utility.rootFolder = args[0];
-            StackOperations so = new StackOperations(Utility.rootFolder);
-            so.ProcessAllFolders().Wait();
+            //Utility.rootFolder = args[0];
+            //StackOperations so = new StackOperations(Utility.rootFolder);
+            //so.ProcessAllFolders().Wait();
 
-            Analysis analysis = new Analysis(Utility.rootFolder);
-            analysis.IISDotnetFrameworkAnalysis();
+            //Analysis analysis = new Analysis(Utility.rootFolder);
+            //analysis.IISDotnetFrameworkAnalysis();
+
+            IISLogOperations iisLogOperations = new IISLogOperations(args[0], args[1], args[2]);
+            iisLogOperations.ProcessIISLogOutput();
+
         }
         
     }
