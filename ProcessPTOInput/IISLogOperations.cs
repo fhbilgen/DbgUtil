@@ -110,7 +110,7 @@ namespace ProcessPTOInput
 
 
         private void WriteMergedLogFile(string outputFilePath, List<LogEntry> logEntries)        
-        {
+        {            
             using (var writer = new StreamWriter(outputFilePath))
             {
                 // Write header
@@ -135,7 +135,7 @@ namespace ProcessPTOInput
         {
             //string normalLoadFilePath = "normal_load.txt";
             //string heavyLoadFilePath = "heavy_load.txt";
-            //string outputFilePath = "merged_output.txt";
+            string outputFilePath = MergedLog + @"\merged_output.txt";
 
             var normalLoadEntries = ReadLogFile(NormalDayLog, "normal");
             var heavyLoadEntries = ReadLogFile(HeavyDayLog, "heavy");
@@ -148,9 +148,9 @@ namespace ProcessPTOInput
             var sortedEntries = SortLogEntries(mergedEntries);
 
 
-            WriteMergedLogFile(MergedLog, sortedEntries);
+            WriteMergedLogFile(outputFilePath, sortedEntries);
 
-            Console.WriteLine($"Merged log file has been written to '{MergedLog}'.");
+            Console.WriteLine($"Merged log file has been written to '{outputFilePath}'.");
         }
 
 

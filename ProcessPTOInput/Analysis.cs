@@ -68,7 +68,7 @@ namespace ProcessPTOInput
             string outputFileName = interim + analysisFileSuffix;
                         
             bool isDumpFile64Bit = Utility.Is64bit(dumpPath, Utility.symPath);
-            string cdbFolder = isDumpFile64Bit ? Utility.cdbPath : Utility.cdbPath32;
+            string cdbFolder = isDumpFile64Bit ? Utility.cdbPath : Utility.cdb32Path;
 
             CreateConfigFile(cdbConfigFileName, outputFileName);
 

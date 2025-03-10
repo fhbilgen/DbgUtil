@@ -70,7 +70,7 @@ namespace ProcessPTOInput
             string stacksFileName = interim + stacksFileSuffix;
             string SummaryStacksFileName = interim + summaryStacksFileSuffix;
             bool isDumpFile64Bit = Utility.Is64bit(dumpPath, Utility.symPath);
-            string cdbFolder = isDumpFile64Bit ? Utility.cdbPath : Utility.cdbPath32;
+            string cdbFolder = isDumpFile64Bit ? Utility.cdbPath : Utility.cdb32Path;
 
             CreateConfigFile(cdbConfigFileName, stacksFileName);
 
@@ -104,9 +104,11 @@ namespace ProcessPTOInput
         // Create the config file
         private void CreateConfigFile(string cdbConfigName, string stacksFileName)
         {
-            string[] cdbcfgflcon = new string[5];
+            //string[] cdbcfgflcon = new string[5];
+            string[] cdbcfgflcon = new string[cdbConfigFileContent.Length];
 
-            for (int i = 0; i != 5; i++)
+            //for (int i = 0; i != 5; i++)
+            for (int i = 0; i != cdbConfigFileContent.Length; i++)
                 cdbcfgflcon[i] = cdbConfigFileContent[i];
 
             cdbcfgflcon[1] = cdbcfgflcon[1] + stacksFileName;
