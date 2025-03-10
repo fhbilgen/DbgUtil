@@ -133,7 +133,7 @@ namespace MemOps
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(ReportFile, false))
             {
                 foreach (MemoryRegionEntry mer in mrDiff.MemRegs)
-                    file.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7} ", mer.BaseAddress.ToString("X"), mer.EndAddress.ToString("X"), mer.RegionSize.ToString("X"), mer.Type, mer.State, mer.Protection, mer.Usage, mer.MoreInfo);
+                    file.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7},{8} ", mer.BaseAddress.ToString("X"), mer.EndAddress.ToString("X"), mer.RegionSize.ToString("X"), mer.RegionSizeDec.ToString(), mer.Type, mer.State, mer.Protection, mer.Usage, mer.MoreInfo);
             }
             
         }

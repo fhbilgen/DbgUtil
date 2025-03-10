@@ -134,15 +134,16 @@ namespace DbgHelpers
                         } // end of IF
 
                     } // End of FOR
-                                        
+
                     // 0`00000 addresses create problem
                     // When there is a + in a row it creates a problem
                     mre = new MemoryRegionEntry
                     {
                         BaseAddress = UInt64.Parse(strArr2[0] == "" ? "0" : strArr2[0], System.Globalization.NumberStyles.HexNumber),
-                        EndAddress = UInt64.Parse(strArr2[0] == "" ? "0" : strArr2[1], System.Globalization.NumberStyles.HexNumber),
-                        RegionSize = UInt64.Parse(strArr2[0] == "" ? "0" : strArr2[2], System.Globalization.NumberStyles.HexNumber),
-                        Type = ( strArr2[3] =="" ? "N/A" : strArr2[3]),
+                        EndAddress = UInt64.Parse(strArr2[1] == "" ? "0" : strArr2[1], System.Globalization.NumberStyles.HexNumber),
+                        RegionSize = UInt64.Parse(strArr2[2] == "" ? "0" : strArr2[2], System.Globalization.NumberStyles.HexNumber),
+                        RegionSizeDec = Convert.ToUInt64(UInt64.Parse(strArr2[2] == "" ? "0" : strArr2[2], System.Globalization.NumberStyles.HexNumber)),
+                        Type = (strArr2[3] == "" ? "N/A" : strArr2[3]),
                         State = (strArr2[4] == "" ? "N/A" : strArr2[4]),
                         Protection = (strArr2[5] == "" ? "N/A" : strArr2[5]),
                         Usage = (strArr2[6] == "" ? "N/A" : strArr2[6]),

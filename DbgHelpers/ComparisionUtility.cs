@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Primitives;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,18 +20,19 @@ namespace DbgHelpers
         public bool RemoveSameCount { get; set; }
 
         public ComparisionMethods ComparisionMethod { get; set; }
-        
+
         public string CalculateReportFileName(string InputFile)
         {
             StringBuilder sb = new StringBuilder();
             char[] delimiterChars = { '\\' };
 
             var strArr = InputFile.Split(delimiterChars);
-            
 
-            for (int i = 0; i != strArr.Length; i++)
-                sb.Append(strArr[i]);
 
+            for (int i = 0; i != strArr.Length-1; i++)
+                sb.Append($"{strArr[i]}\\" );
+                        
+            sb.Remove(sb.Length - 1, 1);
             sb.Append("\\Report.txt");
 
             return sb.ToString();

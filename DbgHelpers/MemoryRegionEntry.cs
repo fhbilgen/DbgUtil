@@ -25,6 +25,7 @@ namespace DbgHelpers
         public string Protection { get; set; }         //Field 6
         public string Usage { get; set; }           //Field 7
         public string MoreInfo { get; set; }        //Field 8
+        public ulong RegionSizeDec { get; set; }    //Field 9
         public MemoryRegionEntry()
         {
             
