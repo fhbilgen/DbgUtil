@@ -93,6 +93,7 @@ namespace ProcessPTOInput
             gsArgs[0] = stacksFileName;
             gsArgs[1] = SummaryStacksFileName;
             gsArgs[2] = isDumpFile64Bit ? "" : " x86 ";
+            Console.WriteLine($"GS arguments {string.Join(" ", gsArgs)}");
             Utility.LaunchProgram(Utility.gsPath, string.Join(" ", gsArgs));    
 
             // Delete the config file for cdb.exe 

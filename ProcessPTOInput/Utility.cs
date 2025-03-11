@@ -9,13 +9,13 @@ namespace ProcessPTOInput
 {
     internal class Utility
     {
-        private static readonly string dmpchkPath = @"C:\debuggers\new\x64\dumpchk.exe";
+        private static readonly string dmpchkPath = @"C:\dbg\x64\dumpchk.exe";
         // Launch the dumpchk.exe tool to determine if the dump file is 32-bit or 64-bit
 
         public static string rootFolder { get; set;}
-        public static string cdbPath = @"C:\debuggers\new\x64\cdb.exe";
-        public static string cdbPath32 = @"C:\debuggers\new\x86\cdb.exe";
-        public static string symPath = @"srv*e:\sym\pri*https://symweb.azurefd.net/";
+        public static string cdbPath = @"C:\dbg\x64\cdb.exe";
+        public static string cdbPath32 = @"C:\dbg\x86\cdb.exe";
+        public static string symPath = @"srv*C:\symbols\pri*https://symweb.azurefd.net/";
         public static string gsPath = @"C:\Tools\MyTools\gs.exe";
 
 
