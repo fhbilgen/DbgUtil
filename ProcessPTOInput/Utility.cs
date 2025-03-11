@@ -10,32 +10,15 @@ namespace ProcessPTOInput
 {
     internal class Utility
     {
+        private static readonly string dmpchkPath = @"C:\debuggers\new\x64\dumpchk.exe";
         // Launch the dumpchk.exe tool to determine if the dump file is 32-bit or 64-bit
         private static string dmpchkPath { get; set; }        
 
         public static string rootFolder { get; set;}
-        public static string cdbPath { get; set; }
-        public static string cdb32Path { get; set; }
-        public static string symPath { get; set; }
-        public static string gsPath { get; set; }
-
-        public static string normalDayIISLogPath { get; set; }
-        public static string heavyDayIISLogPath { get; set; }
-        public static string mergedIISLogPath { get; set; }
-
-        public static void Initialize()
-        {
-            IConfiguration config = new ConfigurationBuilder()
-           .SetBasePath(Directory.GetCurrentDirectory())
-           .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-           .Build();
-
-            dmpchkPath = config["Folders:rootFolder"];
-            rootFolder = config["Folders:dmpchkPath"];
-            cdbPath = config["Folders:cdbPath"];
-            cdb32Path = config["Folders:cdb32Path"];
-            symPath = config["Folders:symPath"];
-            gsPath = config["Folders:gsPath"];
+        public static string cdbPath = @"C:\debuggers\new\x64\cdb.exe";
+        public static string cdbPath32 = @"C:\debuggers\new\x86\cdb.exe";
+        public static string symPath = @"srv*e:\sym\pri*https://symweb.azurefd.net/";
+        public static string gsPath = @"C:\Tools\MyTools\gs.exe";
 
             normalDayIISLogPath = config["Folders:normalDayIISLogPath"];
             heavyDayIISLogPath = config["Folders:heavyDayIISLogPath"];

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ProcessPTOInput": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\mrdata\\bshg\\2025pto\\data\""
+    }
+  }
+}

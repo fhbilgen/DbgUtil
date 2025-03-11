@@ -10,7 +10,7 @@ namespace ProcessPTOInput
     {
         public string[] GetCommands()
         {
-            return new string[] { ".echo CNO1", ".time", ".echo CNO2", "!cpuid", ".echo CNO3", "!runaway", ".echo CNO4", "!peb", ".echo CNO5", "!address -summary" };
+            return new string[] { ".echo CNO1", ".time", ".echo CNO2", "!cpuid", ".echo CNO3", "!runaway", ".echo CNO4", "!peb", ".echo CNO5", "!address -summary", ".echo CNO6", "|" };
         }
     }
 }
