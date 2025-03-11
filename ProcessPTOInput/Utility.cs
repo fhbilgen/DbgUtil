@@ -9,22 +9,51 @@ using System.Threading.Tasks;
 namespace ProcessPTOInput
 {
     internal class Utility
-    {
-        private static readonly string dmpchkPath = @"C:\debuggers\new\x64\dumpchk.exe";
-        // Launch the dumpchk.exe tool to determine if the dump file is 32-bit or 64-bit
-        private static string dmpchkPath { get; set; }        
+    {       
+       
+        private static string? dmpchkPath { get; set; }       
+        public static string? rootFolder { get; set;}
+        public static string? cdbPath { get; set; }
+        public static string? cdb32Path { get; set; }
+        public static string? symPath { get; set; }
+        public static string? gsPath { get; set; }
+        //public static string? heavyDayIISLogPath { get; set; }
+        //public static string? normalDayIISLogPath { get; set; }
+        //public static string? mergedIISLogPath { get; set; }
 
-        public static string rootFolder { get; set;}
-        public static string cdbPath = @"C:\debuggers\new\x64\cdb.exe";
-        public static string cdbPath32 = @"C:\debuggers\new\x86\cdb.exe";
-        public static string symPath = @"srv*e:\sym\pri*https://symweb.azurefd.net/";
-        public static string gsPath = @"C:\Tools\MyTools\gs.exe";
+        public static string[]? normalDayIISLogPaths { get; set; }
+        public static string[]? heavyDayIISLogPaths { get; set; } 
 
-            normalDayIISLogPath = config["Folders:normalDayIISLogPath"];
-            heavyDayIISLogPath = config["Folders:heavyDayIISLogPath"];
-            mergedIISLogPath = config["Folders:mergedIISLogPath"];
+        public static bool Initialize()
+        {
+            IConfiguration config = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .Build();
+
+            if (config == null)
+                return false;
+            else
+            {
+                dmpchkPath = config["Folders:dmpchkPath"];                
+                rootFolder = config["Folders:rootFolder"];
+                cdbPath = config["Folders:cdbPath"];
+                cdb32Path = config["Folders:cdbPath"];
+                symPath = config["Folders:symPath"];
+                gsPath = config["Folders:gsPath"];
+
+                //heavyDayIISLogPath = config["Folders:heavyDayIISLogPath"];
+                //normalDayIISLogPath = config["Folders:normalDayIISLogPath"];
+                //mergedIISLogPath = config["Folders:mergedIISLogPath"];
+
+                normalDayIISLogPaths = config.GetSection("IISLogFolders:NormalDays").Get<string[]>();
+                heavyDayIISLogPaths = config.GetSection("IISLogFolders:NormalDays").Get<string[]>();
+            }
+
+            return true;
         }
 
+        // Launch the dumpchk.exe tool to determine if the dump file is 32-bit or 64-bit
         public static bool Is64bit(string dumpPath, string symPath)
         {
 

@@ -19,7 +19,7 @@ namespace ProcessPTOInput
             Utility.Initialize();
 
             //Utility.rootFolder = args[0];
-            StackOperations so = new StackOperations(Utility.rootFolder);
+            //StackOperations so = new StackOperations(Utility.rootFolder);
             //so.ProcessAllFolders().Wait();
 
             //Analysis analysis = new Analysis(Utility.rootFolder);

@@ -9,15 +9,13 @@ namespace ProcessPTOInput
     internal class IISLogOperations
     {
 
-
-
         class LogEntry
         {
-            public string DayType { get; set; }
-            public string URI { get; set; }
-            public string Status { get; set; }
-            public int[] Counts { get; set; } = new int[24];
-            public double[] Durations { get; set; } = new double[24];
+            public string? DayType { get; set; }
+            public string? URI { get; set; }
+            public string? Status { get; set; }
+            public int[]? Counts { get; set; } = new int[24];
+            public double[]? Durations { get; set; } = new double[24];
         }
 
         private string NormalDayLog { get; set; }
@@ -59,13 +57,10 @@ namespace ProcessPTOInput
                         URI = uri,
                         Status = status
                     };
-                }
-
+                }                                
                 logEntries[key].Counts[hour] = count;
-                logEntries[key].Durations[hour] = duration;
+                logEntries[key].Durations[hour] = duration;                
             }
-
-
             return logEntries.Values.ToList();
         }
 
@@ -74,7 +69,6 @@ namespace ProcessPTOInput
         {
             // Group by status and calculate totals
             var groupedByStatus = logEntries.GroupBy(entry => entry.Status);
-
             var totalEntries = new List<LogEntry>();
 
             foreach (var group in groupedByStatus)

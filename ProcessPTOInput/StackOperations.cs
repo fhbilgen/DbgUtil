@@ -69,8 +69,23 @@ namespace ProcessPTOInput
             string cdbConfigFileName = interim + cdbConfigFileSuffix;
             string stacksFileName = interim + stacksFileSuffix;
             string SummaryStacksFileName = interim + summaryStacksFileSuffix;
-            bool isDumpFile64Bit = Utility.Is64bit(dumpPath, Utility.symPath);
-            string cdbFolder = isDumpFile64Bit ? Utility.cdbPath : Utility.cdb32Path;
+            //bool isDumpFile64Bit = Utility.Is64bit(dumpPath, Utility.symPath);
+            //string cdbFolder = isDumpFile64Bit ? Utility.cdbPath : Utility.cdb32Path;
+            bool isDumpFile64Bit;
+            string cdbFolder;
+
+
+            if (Utility.symPath != null && Utility.cdbPath != null && Utility.cdb32Path != null)
+            {
+                isDumpFile64Bit = Utility.Is64bit(dumpPath, Utility.symPath);
+                cdbFolder = isDumpFile64Bit ? Utility.cdbPath : Utility.cdb32Path;
+            }
+            else
+            {
+                Console.WriteLine($"There is a null value in Utility.symPath, Utility.cdbPath, Utility.cdb32Path ");
+                return;
+            }
+
 
             CreateConfigFile(cdbConfigFileName, stacksFileName);
 
@@ -94,7 +109,18 @@ namespace ProcessPTOInput
             gsArgs[1] = SummaryStacksFileName;
             gsArgs[2] = isDumpFile64Bit ? "" : " x86 ";
             Console.WriteLine($"GS arguments {string.Join(" ", gsArgs)}");
-            Utility.LaunchProgram(Utility.gsPath, string.Join(" ", gsArgs));    
+
+            if (Utility.gsPath != null)
+            {
+                Utility.LaunchProgram(Utility.gsPath, string.Join(" ", gsArgs));                
+            }
+            else
+            {
+                Console.WriteLine($"There is a null value in Utility.gsPath ");
+                return;
+            }
+
+            
 
             // Delete the config file for cdb.exe 
             Utility.DeleteFile(cdbConfigFileName);            

@@ -66,11 +66,21 @@ namespace ProcessPTOInput
             var interim = dumpPath.Substring(0, dumpPath.Length - 4);
             string cdbConfigFileName = interim + cdbConfigFileSuffix;
             string outputFileName = interim + analysisFileSuffix;
-                        
-            bool isDumpFile64Bit = Utility.Is64bit(dumpPath, Utility.symPath);
-            string cdbFolder = isDumpFile64Bit ? Utility.cdbPath : Utility.cdb32Path;
+            bool isDumpFile64Bit;
+            string cdbFolder;
 
-            CreateConfigFile(cdbConfigFileName, outputFileName);
+            if (Utility.symPath != null && Utility.cdbPath != null && Utility.cdb32Path != null)
+            {
+                isDumpFile64Bit = Utility.Is64bit(dumpPath, Utility.symPath);
+                cdbFolder = isDumpFile64Bit ? Utility.cdbPath : Utility.cdb32Path;
+            }
+            else
+            {
+                Console.WriteLine($"There is a null value in Utility.symPath, Utility.cdbPath, Utility.cdb32Path ");
+                return;
+            }
+
+                CreateConfigFile(cdbConfigFileName, outputFileName);
 
             // Run cdb.exe and produce a log file
             string[] cdbArgs = new string[3];
@@ -96,6 +106,8 @@ namespace ProcessPTOInput
             
             Console.WriteLine("IISDotnetFrameworkAnalysis");
 
+            if (Utility.rootFolder == null)
+                return;
             StackOperations so = new StackOperations(Utility.rootFolder);
             so.ProcessAllFolders().Wait();
                         
