@@ -95,8 +95,6 @@ namespace ProcessPTOInput
             cdbArgs[0] = "-z " + dumpPath;
             cdbArgs[1] = "-y " + Utility.symPath;
             cdbArgs[2] = "-cf " + cdbConfigFileName;
-            
-            
 
             Utility.LaunchProgram(cdbFolder, string.Join(" ", cdbArgs));
 
@@ -108,7 +106,7 @@ namespace ProcessPTOInput
             gsArgs[0] = stacksFileName;
             gsArgs[1] = SummaryStacksFileName;
             gsArgs[2] = isDumpFile64Bit ? "" : " x86 ";
-            Console.WriteLine($"GS arguments {string.Join(" ", gsArgs)}");
+            //Console.WriteLine($"GS arguments {string.Join(" ", gsArgs)}");
 
             if (Utility.gsPath != null)
             {

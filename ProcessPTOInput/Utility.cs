@@ -17,6 +17,7 @@ namespace ProcessPTOInput
         public static string? cdb32Path { get; set; }
         public static string? symPath { get; set; }
         public static string? gsPath { get; set; }
+        public static string? LogParserPath { get; set; }
         //public static string? heavyDayIISLogPath { get; set; }
         //public static string? normalDayIISLogPath { get; set; }
         //public static string? mergedIISLogPath { get; set; }
@@ -41,10 +42,7 @@ namespace ProcessPTOInput
                 cdb32Path = config["Folders:cdbPath"];
                 symPath = config["Folders:symPath"];
                 gsPath = config["Folders:gsPath"];
-
-                //heavyDayIISLogPath = config["Folders:heavyDayIISLogPath"];
-                //normalDayIISLogPath = config["Folders:normalDayIISLogPath"];
-                //mergedIISLogPath = config["Folders:mergedIISLogPath"];
+                LogParserPath = config["Folders:LogParserPath"];
 
                 normalDayIISLogPaths = config.GetSection("IISLogFolders:NormalDays").Get<string[]>();
                 heavyDayIISLogPaths = config.GetSection("IISLogFolders:NormalDays").Get<string[]>();

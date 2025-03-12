@@ -25,8 +25,11 @@ namespace ProcessPTOInput
             //Analysis analysis = new Analysis(Utility.rootFolder);
             //analysis.IISDotnetFrameworkAnalysis();
 
-            IISLogOperations iisLogOperations = new IISLogOperations(args[0], args[1], args[2]);
-            iisLogOperations.ProcessIISLogOutput();
+            PreProcessIISLogs ppIISLog = new PreProcessIISLogs(Utility.normalDayIISLogPaths, Utility.heavyDayIISLogPaths);
+            ppIISLog.ProcessIISLogFolder(Utility.normalDayIISLogPaths[0], "normal.txt");
+
+            //IISLogOperations iisLogOperations = new IISLogOperations(args[0], args[1], args[2]);
+            //iisLogOperations.ProcessIISLogOutput();
 
         }
         
