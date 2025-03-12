@@ -23,7 +23,12 @@ namespace ProcessPTOInput
         //public static string? mergedIISLogPath { get; set; }
 
         public static string[]? normalDayIISLogPaths { get; set; }
-        public static string[]? heavyDayIISLogPaths { get; set; } 
+        public static string[]? heavyDayIISLogPaths { get; set; }
+        public static string[]? aggIISLogs { get; set; }
+
+        public static  string NormalDayIISLogSummaryFileName { get; } = "Normal.txt";
+        public static string HeavyDayIISLogSummaryFileName { get; } = "Heavy.txt";
+        public static string AggregateIISLogSummaryFileName { get; } = "Agg.txt";
 
         public static bool Initialize()
         {
@@ -45,7 +50,8 @@ namespace ProcessPTOInput
                 LogParserPath = config["Folders:LogParserPath"];
 
                 normalDayIISLogPaths = config.GetSection("IISLogFolders:NormalDays").Get<string[]>();
-                heavyDayIISLogPaths = config.GetSection("IISLogFolders:NormalDays").Get<string[]>();
+                heavyDayIISLogPaths = config.GetSection("IISLogFolders:HeavyDays").Get<string[]>();
+                aggIISLogs = config.GetSection("IISLogFolders:AggIISLogs").Get<string[]>();
             }
 
             return true;

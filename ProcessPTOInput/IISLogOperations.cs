@@ -129,7 +129,8 @@ namespace ProcessPTOInput
         {
             //string normalLoadFilePath = "normal_load.txt";
             //string heavyLoadFilePath = "heavy_load.txt";
-            string outputFilePath = MergedLog + @"\merged_output.txt";
+            //string outputFilePath = MergedLog + @"\merged_output.txt";
+            string outputFilePath = MergedLog; // + Utility.AggregateIISLogSummaryFileName;
 
             var normalLoadEntries = ReadLogFile(NormalDayLog, "normal");
             var heavyLoadEntries = ReadLogFile(HeavyDayLog, "heavy");
