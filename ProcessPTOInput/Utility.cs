@@ -44,7 +44,7 @@ namespace ProcessPTOInput
                 dmpchkPath = config["Folders:dmpchkPath"];                
                 rootFolder = config["Folders:rootFolder"];
                 cdbPath = config["Folders:cdbPath"];
-                cdb32Path = config["Folders:cdbPath"];
+                cdb32Path = config["Folders:cdb32Path"];
                 symPath = config["Folders:symPath"];
                 gsPath = config["Folders:gsPath"];
                 LogParserPath = config["Folders:LogParserPath"];

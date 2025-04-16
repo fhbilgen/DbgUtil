@@ -108,8 +108,8 @@ namespace ProcessPTOInput
 
             if (Utility.rootFolder == null)
                 return;
-            StackOperations so = new StackOperations(Utility.rootFolder);
-            so.ProcessAllFolders().Wait();
+            //StackOperations so = new StackOperations(Utility.rootFolder);
+            //so.ProcessAllFolders().Wait();
                         
             
             DotnetFrameworkOperations dfo = new DotnetFrameworkOperations();
