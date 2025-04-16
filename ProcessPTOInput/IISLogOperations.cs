@@ -22,7 +22,8 @@ namespace ProcessPTOInput
         private string HeavyDayLog { get; set; }
 
         private string MergedLog { get; set; }
-
+        private string HourColName { get; } = "HR";
+        private string ExecDurationColName { get; } = "Exec";
 
         public IISLogOperations(string normalDayLog, string heavyDayLog, string mergedLog)
         {
@@ -109,8 +110,10 @@ namespace ProcessPTOInput
             {
                 // Write header
                 var header = new List<string> { "DayType", "URI", "Status" };
-                header.AddRange(Enumerable.Range(0, 24).Select(i => $"Count{i}"));
-                header.AddRange(Enumerable.Range(0, 24).Select(i => $"Duration{i}"));
+                //header.AddRange(Enumerable.Range(0, 24).Select(i => $"Count{i}"));
+                //header.AddRange(Enumerable.Range(0, 24).Select(i => $"Duration{i}"));
+                header.AddRange(Enumerable.Range(0, 24).Select(i => $"{HourColName}{i}"));
+                header.AddRange(Enumerable.Range(0, 24).Select(i => $"{ExecDurationColName}{i}"));
                 writer.WriteLine(string.Join(",", header));
 
                 
