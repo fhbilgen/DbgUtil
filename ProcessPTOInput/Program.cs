@@ -54,7 +54,8 @@ namespace ProcessPTOInput
             Console.WriteLine("1. Process IIS Logs");
             Console.WriteLine("2. Process Stacks");
             Console.WriteLine("3. Process Framework Operations");
-            Console.WriteLine("4. Process All");
+            Console.WriteLine("4. Process Framework Operations & Stacks");
+            Console.WriteLine("5. Process All");
             var i = Console.ReadLine();
 
             switch (i)
@@ -69,6 +70,10 @@ namespace ProcessPTOInput
                     ProcessFrameworkOperations();
                     break;
                 case "4":
+                    ProcessStacks();
+                    ProcessFrameworkOperations();
+                    break;
+                case "5":
                     ProcessIISLogs();
                     ProcessStacks();
                     ProcessFrameworkOperations();

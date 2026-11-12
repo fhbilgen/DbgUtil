@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Xml.Linq;
 using DbgHelpers.StackEngine;
 
 namespace Scratch
@@ -31,6 +34,10 @@ namespace Scratch
                 if (args[2].ToLower().Equals("x86") || args[2].ToLower().Equals("32"))
                     StackHelper.FunctionNameStart = 22;
 
+            CleanStackFile(args[0]);
+
+
+
             // Read each line of the file into a string array. Each element
             // of the array is one line of the file.
             string[] lines = System.IO.File.ReadAllLines(args[0]);
@@ -47,6 +54,71 @@ namespace Scratch
             //System.Console.ReadKey();
 
 
+        }
+
+        private static void CleanStackFile(string inputFilePath)
+        {
+            if (string.IsNullOrWhiteSpace(inputFilePath) || !File.Exists(inputFilePath))
+                return;
+
+            List<string> keywords = GetLinesToDeleteFromConfig();
+
+            if (keywords.Count == 0)
+                return;
+
+            string tempFilePath = Path.GetTempFileName();
+            try
+            {
+                using (StreamReader reader = new StreamReader(inputFilePath))
+                using (StreamWriter writer = new StreamWriter(tempFilePath, false))
+                {
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        bool shouldDelete = false;
+                        foreach (string keyword in keywords)
+                        {
+                            if (line.Contains(keyword))
+                            {
+                                shouldDelete = true;
+                                break;
+                            }
+                        }
+
+                        if (!shouldDelete)
+                            writer.WriteLine(line);
+                    }
+                }
+
+                File.Copy(tempFilePath, inputFilePath, true);
+            }
+            finally
+            {
+                if (File.Exists(tempFilePath))
+                    File.Delete(tempFilePath);
+            }
+        }
+
+        private static List<string> GetLinesToDeleteFromConfig()
+        {
+            List<string> keywords = new List<string>();
+            string configPath = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
+            if (string.IsNullOrWhiteSpace(configPath) || !File.Exists(configPath))
+                return keywords;
+
+            XDocument configDocument = XDocument.Load(configPath);
+            XElement linesToDeleteSection = configDocument.Root.Element("LinesToDelete");
+            if (linesToDeleteSection == null)
+                return keywords;
+
+            foreach (XElement entry in linesToDeleteSection.Elements("add"))
+            {
+                XAttribute valueAttribute = entry.Attribute("value");
+                if (valueAttribute != null && !string.IsNullOrWhiteSpace(valueAttribute.Value))
+                    keywords.Add(valueAttribute.Value);
+            }
+
+            return keywords;
         }
     }
 }

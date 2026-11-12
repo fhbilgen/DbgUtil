@@ -105,6 +105,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy *.exe c:\tools\mytools</PostBuildEvent>
+    <PostBuildEvent>copy *.exe c:\tools\mytools
+copy *.exe.config c:\tools\mytools</PostBuildEvent>
   </PropertyGroup>
 </Project>
